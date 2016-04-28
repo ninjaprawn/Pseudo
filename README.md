@@ -3,7 +3,7 @@ The high-level programming language.
 
 It's not really a language as it is a compiler to other languages. 
 
-See the Plans for what's being working on and coming up!
+See the <a href="https://github.com/ninjaprawn/Pseudo/issues/1">plans</a> for what's being working on and coming up!
 
 Compiler inspired by https://github.com/thejameskyle/the-super-tiny-compiler
 
