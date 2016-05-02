@@ -1,15 +1,9 @@
 SET testMessage to Hello There!
 SET testMessage2 to "In Quotes too!"
-SET error to
-set to "error" 
 
 set myInteger to 0
 set myFloat to 1.234
 
-IF testMessage equals Hello There! THEN
-	// New Function soon!
-END IF
-
-IF myInteger is 0 THEN
-	// Comments are fun!
-END IF
+// Uncomment below for error testing
+// SET if to test
+// set to "error"

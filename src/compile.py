@@ -45,7 +45,8 @@ def getTokens(file):
                         floatMatch = re.compile('^\d+\.\d+$')
 
                         if match.group(2).startswith('"') and match.group(2).endswith('"'):
-                            tokens.append({"type": "string", "value": match.group(2)})
+
+                            tokens.append({"type": "string", "value": match.group(2)[1:-1]})
                         elif floatMatch.match(match.group(2)):
                             tokens.append({"type": "float", "value": match.group(2)})
                         elif intMatch.match(match.group(2)):
