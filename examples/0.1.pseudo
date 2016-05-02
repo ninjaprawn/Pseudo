@@ -1,5 +1,7 @@
 SET testMessage to Hello There!
 SET testMessage2 to "In Quotes too!"
+SET error to
+set to "error" 
 
 set myInteger to 0
 set myFloat to 1.234
