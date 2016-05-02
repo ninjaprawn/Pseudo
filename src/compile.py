@@ -62,6 +62,29 @@ def getTokens(file):
         lineCount += 1
     return tokens
 
-print(getTokens(fileToParse))
+
+def transformer(tokens):
+    ast = []
+    count = 0
+    while count < len(tokens):
+        token = tokens[count]
+        if token['type'] == 'operator':
+            currentSequence = {'type': 'operation', 'name': token['value'], 'body': []}
+            if currentSequence['name'] == 'set':
+                count += 1
+                variableName = tokens[count]
+                count += 2
+                variableContents = tokens[count]
+
+                currentSequence['body'].append({'name': variableName['value'], 'value':variableContents['value'], 'type':variableContents['type']})
+            ast.append(currentSequence)
+            continue
+
+        count += 1
+    return ast
+
+tokens = getTokens(fileToParse)
 
 fileToParse.close()
+
+print(transformer(tokens))
