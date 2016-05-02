@@ -76,15 +76,33 @@ def transformer(tokens):
                 count += 2
                 variableContents = tokens[count]
 
-                currentSequence['body'].append({'name': variableName['value'], 'value':variableContents['value'], 'type':variableContents['type']})
+                currentSequence['body'] = {'name': variableName['value'], 'value':variableContents['value'], 'type':variableContents['type']}
             ast.append(currentSequence)
             continue
 
         count += 1
     return ast
 
+# Swift For Now
+def generateCode(ast):
+    finalCode = ""
+    for instruction in ast:
+        if instruction['type'] == 'operation':
+            if instruction['name'] == 'set':
+                finalCode += "let "
+                finalCode += instruction['body']['name']
+                finalCode += " = "
+                if instruction['body']['type'] == 'string':
+                    finalCode += '"' + instruction['body']['value'] + '"'
+                else:
+                    finalCode += instruction['body']['value']
+                finalCode += "\n"
+    return finalCode
+
 tokens = getTokens(fileToParse)
 
 fileToParse.close()
 
-print(transformer(tokens))
+ast = transformer(tokens)
+
+print(generateCode(ast))
