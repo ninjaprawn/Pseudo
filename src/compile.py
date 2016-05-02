@@ -4,11 +4,13 @@ import re
 
 fileToParse = open("../examples/0.1.pseudo")
 
-def getToken(file):
+def getTokens(file):
     tokens = []
     letterMatch = re.compile('[a-z]', re.IGNORECASE)
+    lineCount = 0
     for line in file:
         count = 0
+        print(line.strip())
         while count < len(line):
             char = line[count]
             if letterMatch.match(char):
@@ -20,28 +22,18 @@ def getToken(file):
                     char = line[count]
 
                 if val.lower() == "set":
-                    tokens.append({'type': 'operator', 'value': 'set'})
-                    spaceCount = 0
-                elif val.lower() == "to":
-                    tokens.append({'type': 'suboperator', 'value': 'to'})
-                else:
-                    tokens.append({'type': 'text', 'value': val})
+                    settingMatch = re.compile('set .+? to "?.+?"?', re.IGNORECASE)
+                    if settingMatch.match(line):
+                        print("Passed")
+                    else:
+                        raise Exception('Syntax error on line ' + str(lineCount) + ': ')
+
                 continue
             count += 1
-        break
+        #break
+        lineCount += 1
     return tokens
 
-print(getToken(fileToParse))
-
-def addOne(num):
-    num += 1
-
-x = 0
-addOne(x)
-print(x)
-
-#letterMatch = re.compile('[a-z]', re.IGNORECASE)
-
-#print letterMatch.match("0")
+print(getTokens(fileToParse))
 
 fileToParse.close()
