@@ -1,9 +1,10 @@
 # Pseudo
-The high-level programming language. 
 
-It's not really a language as it is a compiler to other languages. 
+**Current Version: 0.1**
 
-See the <a href="https://github.com/ninjaprawn/Pseudo/issues/1">plans</a> for what's being working on and coming up!
+A small project that compiles Pseudocode into other languages.
+
+See the <a href="https://github.com/ninjaprawn/Pseudo/issues/2">plans</a> for what's being working on and coming up!
 
 Compiler inspired by https://github.com/thejameskyle/the-super-tiny-compiler
 
