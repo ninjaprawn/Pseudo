@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import re
+from rules import *
 
 fileToParse = open("../examples/0.1.pseudo")
 
