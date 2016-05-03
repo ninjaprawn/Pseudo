@@ -2,8 +2,9 @@ SET testMessage to Hello There!
 SET testMessage2 to "In Quotes too!"
 
 set myInteger to 0
-set myFloat to 1.234
+sEt myFloat to 1.234
 
 // Uncomment below for error testing
-// SET if to test
-// set to "error"
+//SET $kool to test
+//Set set to ha
+//set to "error"
