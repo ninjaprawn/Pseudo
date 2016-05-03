@@ -1,15 +1,16 @@
 #!/usr/bin/python
 
 import re
-from rules import *
+from rules import ruleIF, ruleSET
 
-fileToParse = open("../examples/0.1.pseudo")
+fileToParse = open("../examples/0.2.pseudo")
 
 def getTokens(file):
     tokens = []
     letterMatch = re.compile('[a-z]', re.IGNORECASE)
     lineCount = 1
     for line in file:
+        line = line.strip()
         count = 0
         if line.startswith("//"):
             # Ignores single line comments, like normal compilers
@@ -19,17 +20,24 @@ def getTokens(file):
             char = line[count]
             if letterMatch.match(char):
                 val = ""
-
                 while letterMatch.match(char):
                     val += char
                     count += 1
-                    char = line[count]
+                    if count >= len(line):
+                        break
+                    else:
+                        char = line[count]
 
                 if val.lower() == "set":
-                    newTokens = set.checkIfSetFormat(line, lineCount)
+                    newTokens = ruleSET.checkIfSetFormat(line, lineCount)
                     tokens.extend(newTokens)
+                elif val.lower() == "if":
+                    newTokens = ruleIF.checkIfIFFormat(line, lineCount)
+                    tokens.extend(newTokens)
+                elif val.lower() == "fi":
+                    tokens.append({"type": "operator", "value": "fi"})
 
-                continue
+                break
             count += 1
         lineCount += 1
     return tokens
@@ -49,6 +57,19 @@ def transformer(tokens):
                 variableContents = tokens[count]
 
                 currentSequence['body'] = {'name': variableName['value'], 'value':variableContents['value'], 'type':variableContents['type']}
+            elif currentSequence['name'] == 'if':
+                count += 1
+                leftHandSide = tokens[count]
+                count += 1
+                comparingType = tokens[count]
+                count += 1
+                rightHandSide = tokens[count]
+
+                currentSequence['body'] = {'left': leftHandSide, 'right':  rightHandSide, 'comparing type': comparingType['value']}
+            elif currentSequence['name'] == 'fi':
+                count += 1
+                currentSequence['name'] = 'endif'
+
             ast.append(currentSequence)
             continue
 
@@ -77,4 +98,6 @@ fileToParse.close()
 
 ast = transformer(tokens)
 
-print(generateCode(ast))
+print(ast)
+
+#print(generateCode(ast))

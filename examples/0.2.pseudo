@@ -1,0 +1,9 @@
+sEt myFloat to 1.234
+
+IF 0.0 is equal to 0
+
+FI
+
+IF myFloat is 1.234
+
+FI
