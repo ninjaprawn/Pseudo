@@ -78,34 +78,20 @@ def transformer(tokens):
     return ast
 
 # Swift For Now
-def generateCode(ast):
+def generateCode(ast, lang=swift):
     finalCode = ""
     indentation = 0
     for instruction in ast:
         if instruction['type'] == 'operation':
             if instruction['name'] == 'set':
-                finalCode += swift.generateSet(instruction['body']['name'], instruction['body']['value'], instruction['body']['type'], indentation)
+                finalCode += lang.generateSet(instruction['body']['name'], instruction['body']['value'], instruction['body']['type'], indentation)
             elif instruction['name'] == 'if':
-                finalCode += "  "*indentation
+                finalCode += lang.generateIf(instruction['body']['comparing type'], instruction['body']['left']['type'], instruction['body']['left']['value'], instruction['body']['right']['type'], instruction['body']['right']['value'], indentation)
                 indentation += 1
-                finalCode += "\nif "
-                if instruction['body']['left']['type'] == "string":
-                    finalCode += '"' + instruction['body']['left']['value'] +'"'
-                else:
-                    finalCode += instruction['body']['left']['value']
-
-                finalCode += " == "
-                if instruction['body']['right']['type'] == "string":
-                    finalCode += '"' + instruction['body']['right']['value'] +'"'
-                else:
-                    finalCode += instruction['body']['right']['value']
-                finalCode += " {\n\n"
-
             elif instruction['name'] == 'endif':
                 if indentation > 0:
                     indentation -= 1
-                finalCode += "  "*indentation
-                finalCode += "\n}\n"
+                finalCode += lang.generateEndIf(indentation)
 
     return finalCode
 
@@ -115,6 +101,4 @@ fileToParse.close()
 
 ast = transformer(tokens)
 
-#print(ast)
-
-print(generateCode(ast))
+print(generateCode(ast, javascript))

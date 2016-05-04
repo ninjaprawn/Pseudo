@@ -9,5 +9,5 @@ IF 0.0 is equal to 0
 FI
 
 IF myFloat is 1.234
-
+    set testVar to "Hi im in a if"
 FI
