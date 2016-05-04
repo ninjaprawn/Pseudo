@@ -4,7 +4,7 @@ import re
 
 def checkIfIFFormat(line, lineCount):
     tokens = []
-    ifMatch = re.compile('if ("?.+"?) (is|equals|is equal to) ("?.+"?)', re.IGNORECASE)
+    ifMatch = re.compile('if ("?.+"?) (is equal to|equals|is) ("?.+"?)', re.IGNORECASE)
     match = ifMatch.match(line)
     if match:
 

@@ -79,9 +79,11 @@ def transformer(tokens):
 # Swift For Now
 def generateCode(ast):
     finalCode = ""
+    indentation = ""
     for instruction in ast:
         if instruction['type'] == 'operation':
             if instruction['name'] == 'set':
+                finalCode += indentation
                 finalCode += "let "
                 finalCode += instruction['body']['name']
                 finalCode += " = "
@@ -90,6 +92,28 @@ def generateCode(ast):
                 else:
                     finalCode += instruction['body']['value']
                 finalCode += "\n"
+            elif instruction['name'] == 'if':
+                finalCode += indentation
+                indentation += "    "
+                finalCode += "\nif "
+                if instruction['body']['left']['type'] == "string":
+                    finalCode += '"' + instruction['body']['left']['value'] +'"'
+                else:
+                    finalCode += instruction['body']['left']['value']
+
+                finalCode += " == "
+                if instruction['body']['right']['type'] == "string":
+                    finalCode += '"' + instruction['body']['right']['value'] +'"'
+                else:
+                    finalCode += instruction['body']['right']['value']
+                finalCode += " {\n\n"
+
+            elif instruction['name'] == 'endif':
+                if len(indentation) > 0:
+                    indentation = indentation[:-4]
+                finalCode += indentation
+                finalCode += "\n}\n"
+
     return finalCode
 
 tokens = getTokens(fileToParse)
@@ -98,6 +122,6 @@ fileToParse.close()
 
 ast = transformer(tokens)
 
-print(ast)
+#print(ast)
 
-#print(generateCode(ast))
+print(generateCode(ast))
