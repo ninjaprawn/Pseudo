@@ -1,7 +1,8 @@
 #!/usr/bin/python
 
 import re
-from rules import ruleIF, ruleSET
+from rules import *
+from lang import *
 
 fileToParse = open("../examples/0.2.pseudo")
 
@@ -79,22 +80,14 @@ def transformer(tokens):
 # Swift For Now
 def generateCode(ast):
     finalCode = ""
-    indentation = ""
+    indentation = 0
     for instruction in ast:
         if instruction['type'] == 'operation':
             if instruction['name'] == 'set':
-                finalCode += indentation
-                finalCode += "let "
-                finalCode += instruction['body']['name']
-                finalCode += " = "
-                if instruction['body']['type'] == 'string':
-                    finalCode += '"' + instruction['body']['value'] + '"'
-                else:
-                    finalCode += instruction['body']['value']
-                finalCode += "\n"
+                finalCode += swift.generateSet(instruction, indentation)
             elif instruction['name'] == 'if':
-                finalCode += indentation
-                indentation += "    "
+                finalCode += "  "*indentation
+                indentation += 1
                 finalCode += "\nif "
                 if instruction['body']['left']['type'] == "string":
                     finalCode += '"' + instruction['body']['left']['value'] +'"'
@@ -109,9 +102,9 @@ def generateCode(ast):
                 finalCode += " {\n\n"
 
             elif instruction['name'] == 'endif':
-                if len(indentation) > 0:
-                    indentation = indentation[:-4]
-                finalCode += indentation
+                if indentation > 0:
+                    indentation -= 1
+                finalCode += "  "*indentation
                 finalCode += "\n}\n"
 
     return finalCode

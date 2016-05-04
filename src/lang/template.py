@@ -2,11 +2,12 @@
 
 def generateSet(instruction, indentationLevel):
     finalLine = "   "*indentationLevel
-    finalLine += "let "
+    finalLine += "instruction "
     finalLine += instruction['body']['name']
-    finalLine += " = "
+    finalLine += " assignOperator "
 
     if instruction['body']['type'] == 'string':
+        # Whatever you use for defining strings (either single, double, etc.)
         finalLine += '"' + instruction['body']['value'] + '"'
     else:
         finalLine += instruction['body']['value']
