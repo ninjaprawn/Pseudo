@@ -1,16 +1,16 @@
 #!/usr/bin/python
 
-def generateSet(instruction, indentationLevel):
+def generateSet(name, value, type, indentationLevel):
     finalLine = "   "*indentationLevel
     finalLine += "instruction "
-    finalLine += instruction['body']['name']
+    finalLine += name
     finalLine += " assignOperator "
 
-    if instruction['body']['type'] == 'string':
+    if value['type'] == 'string':
         # Whatever you use for defining strings (either single, double, etc.)
-        finalLine += '"' + instruction['body']['value'] + '"'
+        finalLine += '"' + value['value'] + '"'
     else:
-        finalLine += instruction['body']['value']
+        finalLine += value['value']
 
     finalLine += "\n"
     return finalLine

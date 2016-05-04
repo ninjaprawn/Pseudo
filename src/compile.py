@@ -84,7 +84,7 @@ def generateCode(ast):
     for instruction in ast:
         if instruction['type'] == 'operation':
             if instruction['name'] == 'set':
-                finalCode += swift.generateSet(instruction, indentation)
+                finalCode += swift.generateSet(instruction['body']['name'], instruction['body']['value'], instruction['body']['type'], indentation)
             elif instruction['name'] == 'if':
                 finalCode += "  "*indentation
                 indentation += 1
