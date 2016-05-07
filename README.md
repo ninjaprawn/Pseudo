@@ -4,7 +4,7 @@
 
 A small project that compiles Pseudocode into other languages.
 
-See the <a href="https://github.com/ninjaprawn/Pseudo/issues/2">plans</a> for what's being worked on and coming up!
+See the <a href="https://github.com/ninjaprawn/Pseudo/issues/3">plans</a> for what's being worked on and coming up!
 
 Compiler inspired by https://github.com/thejameskyle/the-super-tiny-compiler
 
