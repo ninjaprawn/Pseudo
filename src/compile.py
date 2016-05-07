@@ -125,4 +125,4 @@ fileToParse.close()
 
 ast = transformer(tokens)
 
-print(generateCode(ast, javascript))
+print(generateCode(ast, python))
