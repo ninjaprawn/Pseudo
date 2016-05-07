@@ -47,6 +47,7 @@ def getTokens(file):
 def transformer(tokens):
     ast = []
     count = 0
+    variables = {}
     while count < len(tokens):
         token = tokens[count]
         if token['type'] == 'operator':
@@ -54,8 +55,11 @@ def transformer(tokens):
             if currentSequence['name'] == 'set':
                 count += 1
                 variableName = tokens[count]
+
                 count += 2
                 variableContents = tokens[count]
+
+                variables[variableName['value']] = variableContents['type']
 
                 currentSequence['body'] = {'name': variableName['value'], 'value':variableContents['value'], 'type':variableContents['type']}
             elif currentSequence['name'] == 'if':
@@ -65,6 +69,16 @@ def transformer(tokens):
                 comparingType = tokens[count]
                 count += 1
                 rightHandSide = tokens[count]
+
+                if leftHandSide['type'] == 'variable':
+                    if leftHandSide['value'] not in variables.keys():
+                        raise ReferenceError('Variable named ' + leftHandSide['value'] + ' has not been created.')
+
+                if rightHandSide['type'] == 'variable':
+                    if rightHandSide['value'] not in variables.keys():
+                        raise ReferenceError('Variable named ' + rightHandSide['value'] + ' has not been created.')
+
+
 
                 currentSequence['body'] = {'left': leftHandSide, 'right':  rightHandSide, 'comparing type': comparingType['value']}
             elif currentSequence['name'] == 'fi':
