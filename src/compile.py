@@ -78,7 +78,17 @@ def transformer(tokens):
                     if rightHandSide['value'] not in variables.keys():
                         raise ReferenceError('Variable named ' + rightHandSide['value'] + ' has not been created.')
 
+                leftType = leftHandSide['type']
+                rightType = rightHandSide['type']
 
+                if leftType == 'variable':
+                    leftType = variables[leftHandSide['value']]
+
+                if rightType == 'variable':
+                    rightType = variables[rightHandSide['value']]
+
+                if leftType != rightType:
+                    raise TypeError('Cannot compare type ' + leftType + ' with type ' + rightType)
 
                 currentSequence['body'] = {'left': leftHandSide, 'right':  rightHandSide, 'comparing type': comparingType['value']}
             elif currentSequence['name'] == 'fi':
