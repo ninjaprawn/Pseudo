@@ -2,7 +2,7 @@
 
 **Current Version: 0.2**
 
-A small project that compiles Pseudocode into other languages.
+A small project that translate Pseudocode into other languages.
 
 See the <a href="https://github.com/ninjaprawn/Pseudo/issues/3">plans</a> for what's being worked on and coming up!
 
